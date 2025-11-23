@@ -16,13 +16,41 @@
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            <div class="relative">
+                <x-text-input id="password" class="block mt-1 w-full pr-10"
+                    type="password"
+                    name="password"
+                    required autocomplete="current-password" />
+
+                <!-- Toggle Password Visibility Buttons -->
+                <button type="button" id="togglePasswordShow" class="absolute inset-y-0 right-0 flex items-center pr-3" onclick="togglePassword()">
+                    <x-open-eye />
+                </button>
+                <button type="button" id="togglePasswordHide" class="absolute inset-y-0 right-0 flex items-center pr-3 hidden" onclick="togglePassword()">
+                    <x-closed-eye />
+                </button>
+            </div>
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
+
+        <script>
+            function togglePassword() {
+                const passwordInput = document.getElementById('password');
+                const showButton = document.getElementById('togglePasswordShow');
+                const hideButton = document.getElementById('togglePasswordHide');
+
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    showButton.classList.add('hidden');
+                    hideButton.classList.remove('hidden');
+                } else {
+                    passwordInput.type = 'password';
+                    showButton.classList.remove('hidden');
+                    hideButton.classList.add('hidden');
+                }
+            }
+        </script>
 
         <!-- Remember Me -->
         <div class="block mt-4">
@@ -34,9 +62,9 @@
 
         <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
+            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
+                {{ __('Forgot your password?') }}
+            </a>
             @endif
 
             <x-primary-button class="ms-3">

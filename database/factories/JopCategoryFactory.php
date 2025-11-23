@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\JopCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,12 @@ class JopCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->unique()->randomElement([
+                'Software Development', 'Data Science', 'Design', 'Marketing',
+                'Sales', 'Customer Service', 'Human Resources', 'Finance',
+                'Engineering', 'Healthcare', 'Education', 'Legal',
+                'Operations', 'Product Management', 'Quality Assurance', 'DevOps'
+            ]),
         ];
     }
 }

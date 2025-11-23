@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Resume;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,18 @@ class ResumeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => User::factory(),
+            'filename' => fake()->firstName() . '_' . fake()->lastName() . '_Resume.pdf',
+            'fileURL' => 'resumes/' . fake()->uuid() . '.pdf',
+            'contactDetails' => json_encode([
+                'phone' => fake()->phoneNumber(),
+                'email' => fake()->email(),
+                'linkedin' => fake()->url(),
+            ]),
+            'education' => fake()->paragraphs(2, true),
+            'summary' => fake()->paragraph(4),
+            'skills' => implode(', ', fake()->words(10)),
+            'experience' => fake()->paragraphs(3, true),
         ];
     }
 }

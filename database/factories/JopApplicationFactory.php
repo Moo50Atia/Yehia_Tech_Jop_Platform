@@ -2,6 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\JopApplication;
+use App\Models\User;
+use App\Models\JobVacansy;
+use App\Models\Resume;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +21,12 @@ class JopApplicationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => User::factory(),
+            'job_vacansy_id' => JobVacansy::factory(),
+            'resume_id' => Resume::factory(),
+            'status' => fake()->randomElement(['pending', 'accepted', 'rejected']),
+            'aiGeneratedScore' => fake()->randomFloat(2, 0, 100),
+            'aiGeneratedFeedback' => fake()->paragraph(3),
         ];
     }
 }

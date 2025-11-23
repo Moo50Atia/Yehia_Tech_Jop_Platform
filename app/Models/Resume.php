@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Concerns\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\JopApplication;
 use App\Models\User;
 
@@ -15,7 +15,7 @@ class Resume extends Model
     use HasFactory , HasUuids , SoftDeletes;
     protected $primaryKey = 'id';
     protected $keyType = 'string';
-    protected $incrementing = false;
+    public $incrementing = false;
     protected $table = 'resumes';
     protected $fillable = [
         'user_id',

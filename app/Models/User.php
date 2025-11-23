@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Concerns\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\JopApplication;
 use App\Models\Resume;
 use App\Models\Company;
@@ -16,7 +16,7 @@ use App\Models\JobVacansy;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable , HasUuids , SoftDeletes;
+    use HasFactory, Notifiable, HasUuids, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -25,8 +25,8 @@ class User extends Authenticatable
      */
     protected $primaryKey = 'id';
     protected $keyType = 'string';
-    protected $incrementing = false;
-   
+    public $incrementing = false;
+
     protected $fillable = [
         'name',
         'email',
@@ -57,16 +57,20 @@ class User extends Authenticatable
             'deleted_at' => 'datetime',
         ];
     }
-    public function jobApplications(){
-        return $this->hasMany(JopApplication::class ,'user_id','id');
+    public function jobApplications()
+    {
+        return $this->hasMany(JopApplication::class, 'user_id', 'id');
     }
-    public function resumes(){
-        return $this->hasMany(Resume::class ,'user_id','id');
+    public function resumes()
+    {
+        return $this->hasMany(Resume::class, 'user_id', 'id');
     }
-    public function company(){
-        return $this->belongsTo(Company::class ,'owner_id','id');
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'owner_id', 'id');
     }
-    public function jobVacansies(){
-        return $this->hasMany(JobVacansy::class ,'company_id','id');
+    public function jobVacansies()
+    {
+        return $this->hasMany(JobVacansy::class, 'company_id', 'id');
     }
 }

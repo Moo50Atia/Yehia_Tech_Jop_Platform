@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\JobVacansy;
+use App\Models\Company;
+use App\Models\JopCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +20,13 @@ class JobVacansyFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->jobTitle(),
+            'description' => fake()->paragraphs(3, true),
+            'location' => fake()->city() . ', ' . fake()->country(),
+            'type' => fake()->randomElement(['full-time', 'remote', 'contract', 'part-time']),
+            'salary' => fake()->randomFloat(2, 30000, 150000),
+            'company_id' => Company::factory(),
+            'job_category_id' => JopCategory::factory(),
         ];
     }
 }

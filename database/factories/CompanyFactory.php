@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Company;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,15 @@ class CompanyFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->company(),
+            'address' => fake()->address(),
+            'industry' => fake()->randomElement([
+                'Technology', 'Healthcare', 'Finance', 'Education', 
+                'Manufacturing', 'Retail', 'Construction', 'Marketing',
+                'Real Estate', 'Hospitality', 'Transportation', 'Agriculture'
+            ]),
+            'website' => fake()->url(),
+            'owner_id' => User::factory(),
         ];
     }
 }

@@ -20,7 +20,7 @@ class JopApplication extends Model
     protected $table = 'jop_applications';
     protected $fillable = [
         'user_id',
-        'job_vacansy_id',
+        'job_vacancy_id',
         'resume_id',
         'status',
         'aiGeneratedScore',
@@ -34,14 +34,16 @@ class JopApplication extends Model
         ];
     }
 
+    public function jobVacancy()
+    {
+        return $this->belongsTo(JobVacansy::class, 'job_vacancy_id', 'id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-    public function jobVacansy()
-    {
-        return $this->belongsTo(JobVacansy::class, 'job_vacansy_id', 'id');
-    }
+
     public function resume()
     {
         return $this->belongsTo(Resume::class, 'resume_id', 'id');

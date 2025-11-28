@@ -12,6 +12,7 @@ use App\Models\JopApplication;
 use App\Models\Resume;
 use App\Models\Company;
 use App\Models\JobVacansy;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -20,7 +21,7 @@ class User extends Authenticatable
 
     /**
      * The attributes that are mass assignable.
-     *
+     *  
      * @var list<string>
      */
     protected $primaryKey = 'id';
@@ -67,10 +68,23 @@ class User extends Authenticatable
     }
     public function company()
     {
-        return $this->belongsTo(Company::class, 'owner_id', 'id');
+        return $this->hasOne(Company::class, 'owner_id', 'id');
     }
-    public function jobVacansies()
+
+    // Accessor For the relation of companies and the user in the company if the user is company owner
+    protected function companyJobApplicationsUsers(): Attribute
     {
-        return $this->hasMany(JobVacansy::class, 'company_id', 'id');
+        return Attribute::make(
+            get: function () {
+
+                if (!$this->company) {
+                    return User::whereRaw("1 = 0");
+                }
+
+                return User::whereHas("jobApplications", function ($q) {
+                    $q->where("company_id", $this->company->id);
+                });
+            }
+        );
     }
 }

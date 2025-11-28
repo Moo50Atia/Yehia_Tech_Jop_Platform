@@ -37,7 +37,7 @@ class Company extends Model
     {
         return $this->belongsTo(User::class, 'owner_id', 'id');
     }
-    public function jobVacansies()
+    public function jobVacancies()
     {
         return $this->hasMany(JobVacansy::class, 'company_id', 'id');
     }

@@ -24,10 +24,10 @@
 
                 <!-- Toggle Password Visibility Buttons -->
                 <button type="button" id="togglePasswordShow" class="absolute inset-y-0 right-0 flex items-center pr-3" onclick="togglePassword()">
-                    <x-open-eye />
+                    <x-closed-eye />
                 </button>
                 <button type="button" id="togglePasswordHide" class="absolute inset-y-0 right-0 flex items-center pr-3 hidden" onclick="togglePassword()">
-                    <x-closed-eye />
+                    <x-open-eye />
                 </button>
             </div>
 

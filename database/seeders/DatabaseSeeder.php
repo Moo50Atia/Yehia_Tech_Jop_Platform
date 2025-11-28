@@ -21,14 +21,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create Admin User
-        $admin = User::create([
-            'name' => 'Admin',
-            'email' => 'admin@admin.com',
-            'password' => Hash::make('123456789'),
-            'role' => 'admin',
-            'email_verified_at' => now(),
-        ]);
+
 
         // Create Job Categories
         $categories = [
@@ -101,9 +94,12 @@ class DatabaseSeeder extends Seeder
                     'user_id' => $seeker->id,
                     'job_vacansy_id' => $job->id,
                     'resume_id' => $seekerResume->id,
+                    'company_id' => $job->company_id,
                 ]);
             }
         }
+
+
 
         $this->command->info('Database seeded successfully!');
         $this->command->info('Admin: admin@admin.com / 123456789');

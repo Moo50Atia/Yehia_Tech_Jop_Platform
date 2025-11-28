@@ -20,13 +20,14 @@ class JobVacansy extends Model
     protected $table = 'job_vacansies';
 
     protected $fillable = [
+        'company_id',
+        'job_category_id',
+        'note',
         'title',
         'description',
         'location',
         'type',
         'salary',
-        'company_id',
-        'job_category_id',
 
     ];
     protected $dates = [

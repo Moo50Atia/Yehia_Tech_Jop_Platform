@@ -5,7 +5,7 @@
     <div class="py-8">
         <div class="max-w-2xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6">
-                <form action="{{ route('application.store') }}" method="POST" class="space-y-6">
+                <form action="{{ route('admin.applications.store') }}" method="POST" class="space-y-6">
                     @csrf
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('Job Vacancy') }} *</label>
@@ -48,7 +48,7 @@
                         @error('status')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                     </div>
                     <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-                        <a href="{{ route('application.index') }}" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded-lg text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase hover:bg-gray-400 transition">{{ __('Cancel') }}</a>
+                        <a href="{{ route('admin.applications.index') }}" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded-lg text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase hover:bg-gray-400 transition">{{ __('Cancel') }}</a>
                         <button type="submit" class="px-4 py-2 bg-indigo-600 rounded-lg text-xs font-semibold text-white uppercase hover:bg-indigo-700 transition">{{ __('Create') }}</button>
                     </div>
                 </form>

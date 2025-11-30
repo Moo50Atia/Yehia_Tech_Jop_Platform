@@ -13,10 +13,10 @@ class CompanyOwnerVacansyController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', JobVacansy::class);
+        // $this->authorize('viewAny', JobVacansy::class);
 
-        $vacancies = JobVacansy::where('company_id', FacadesAuth::user()->company_id)->paginate(10);
-        return view('vacancies.index', compact('vacancies'));
+        // $vacancies = JobVacansy::where('company_id', FacadesAuth::user()->company_id)->paginate(10);
+        return view('company.vacancies');
     }
 
     public function edit(JobVacansy $vacancy)

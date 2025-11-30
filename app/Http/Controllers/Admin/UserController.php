@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\View
     {
         $users = User::latest()->paginate(10);
-        return view('users.index', compact('users'));
+        $role = Auth::user()->role;
+        return view('users.index', compact('users', 'role'));
     }
 
     public function create(): \Illuminate\Contracts\View\View

@@ -28,8 +28,8 @@
                     </div>
                 </dl>
                 <div class="mt-6 flex justify-end space-x-2">
-                    <a href="{{ route('application.edit', $application->id) }}" class="px-4 py-2 bg-yellow-600 rounded-lg text-xs font-semibold text-white uppercase hover:bg-yellow-700 transition">{{ __('Edit') }}</a>
-                    <a href="{{ route('application.index') }}" class="px-4 py-2 bg-gray-600 rounded-lg text-xs font-semibold text-white uppercase hover:bg-gray-700 transition">{{ __('Back') }}</a>
+                    <a href="{{ route('admin.applications.edit', $application->id) }}" class="px-4 py-2 bg-yellow-600 rounded-lg text-xs font-semibold text-white uppercase hover:bg-yellow-700 transition">{{ __('Edit') }}</a>
+                    <a href="{{ route('admin.applications.index') }}" class="px-4 py-2 bg-gray-600 rounded-lg text-xs font-semibold text-white uppercase hover:bg-gray-700 transition">{{ __('Back') }}</a>
                 </div>
             </div>
         </div>

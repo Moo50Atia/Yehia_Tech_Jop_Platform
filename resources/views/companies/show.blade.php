@@ -5,8 +5,8 @@
                 {{ $company->name }}
             </h2>
             <div class="flex space-x-2">
-                <a href="{{ route('company.edit', $company->id) }}" class="inline-flex items-center px-4 py-2 bg-yellow-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-700 transition">{{ __('Edit') }}</a>
-                <a href="{{ route('company.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 transition">{{ __('Back') }}</a>
+                <a href="{{ route('admin.companies.edit', $company->id) }}" class="inline-flex items-center px-4 py-2 bg-yellow-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-700 transition">{{ __('Edit') }}</a>
+                <a href="{{ route('admin.companies.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 transition">{{ __('Back') }}</a>
             </div>
         </div>
     </x-slot>

@@ -15,6 +15,7 @@ Route::get('/', function () {
 // Auth routes (Breeze / Jetstream)
 require __DIR__ . '/auth.php';
 
+require __DIR__ . '/admin.php';
 // Company Owner routes
 Route::middleware(['auth'])->group(function () {
 
@@ -31,4 +32,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('categories', [CompanyOwnerCategoryController::class, 'index'])
         ->name('company.categories');
+
+    Route::get('users', [CompanyOwnerUserController::class, 'index'])
+        ->name('company.users');
 });

@@ -7,6 +7,8 @@ use App\Http\Controllers\CompanyOwnerVacansyController;
 use App\Http\Controllers\CompanyOwnerApplicationController;
 use App\Http\Controllers\CompanyOwnerCategoryController;
 use App\Http\Controllers\CompanyOwnerUserController;
+use App\Http\Controllers\JopSeeker\SeekerDashboardController;
+use \App\Http\Controllers\JopSeeker\SeekerApplicationController;
 // Public routes
 Route::get('/', function () {
     return view('welcome');
@@ -54,6 +56,32 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('users', [CompanyOwnerUserController::class, 'index'])
         ->name('company.users');
+
+    // Job Seeker Routes
+    Route::prefix('seeker')->name('seeker.')->group(function () {
+        Route::get('dashboard', [SeekerDashboardController::class, 'index'])
+            ->name('dashboard');
+        Route::get('vacancy/{vacancy}', [SeekerApplicationController::class, 'showVacancy'])
+            ->name('vacancy.show');
+        Route::get('vacancy/{vacancy}/apply', [SeekerApplicationController::class, 'show'])
+            ->name('apply');
+        Route::post('vacancy/{vacancy}/apply', [SeekerApplicationController::class, 'store'])
+            ->name('apply.store');
+        Route::get('my-applications', [SeekerApplicationController::class, 'myApplications'])
+            ->name('my-applications');
+
+        // Resume management routes
+        Route::get('resumes', [SeekerDashboardController::class, 'myResumes'])
+            ->name('resumes');
+        Route::get('resume/upload', [SeekerDashboardController::class, 'showUploadResume'])
+            ->name('resume.upload');
+        Route::post('resume/upload', [SeekerDashboardController::class, 'storeResume'])
+            ->name('resume.store');
+        Route::get('resume/{resume}/download', [SeekerDashboardController::class, 'downloadResume'])
+            ->name('resume.download');
+        Route::delete('resume/{resume}', [SeekerDashboardController::class, 'deleteResume'])
+            ->name('resume.delete');
+    });
 
     // Virtual routes for frontend-only show pages (no backend required)
     Route::get('resume/show/{id?}', function () {

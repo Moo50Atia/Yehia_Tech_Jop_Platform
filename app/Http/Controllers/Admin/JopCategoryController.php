@@ -22,28 +22,29 @@ class JopCategoryController extends Controller
     public function store(JopCategoryRequest $request): \Illuminate\Http\RedirectResponse
     {
         JopCategory::create($request->validated());
-        return redirect()->route('jop_categories.index')->with('success', 'Created successfully');
+        return redirect()->route('admin.categories.index')->with('success', 'Category created successfully');
     }
 
-    public function show(JopCategory $jopCategory): \Illuminate\Contracts\View\View
+    public function show(JopCategory $category): \Illuminate\Contracts\View\View
     {
-        return view('jop_categories.show', compact('jopCategory'));
+        $category->load('jobVacansies');
+        return view('jop_categories.show', compact('category'));
     }
 
-    public function edit(JopCategory $jopCategory): \Illuminate\Contracts\View\View
+    public function edit(JopCategory $category): \Illuminate\Contracts\View\View
     {
-        return view('jop_categories.edit', compact('jopCategory'));
+        return view('jop_categories.edit', compact('category'));
     }
 
-    public function update(JopCategoryRequest $request, JopCategory $jopCategory): \Illuminate\Http\RedirectResponse
+    public function update(JopCategoryRequest $request, JopCategory $category): \Illuminate\Http\RedirectResponse
     {
-        $jopCategory->update($request->validated());
-        return redirect()->route('jop_categories.index')->with('success', 'Updated successfully');
+        $category->update($request->validated());
+        return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully');
     }
 
-    public function destroy(JopCategory $jopCategory): \Illuminate\Http\RedirectResponse
+    public function destroy(JopCategory $category): \Illuminate\Http\RedirectResponse
     {
-        $jopCategory->delete();
-        return redirect()->route('jop_categories.index')->with('success', 'Deleted successfully');
+        $category->delete();
+        return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully');
     }
 }

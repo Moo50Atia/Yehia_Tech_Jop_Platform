@@ -13,7 +13,7 @@ class VacancyPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->company_id !== null;
+        return $user->company !== null;
     }
 
     /**
@@ -21,7 +21,7 @@ class VacancyPolicy
      */
     public function view(User $user, JobVacansy $jobVacansy): bool
     {
-        return $user->id === $jobVacansy->company_id;
+        return $user->company && $user->company->id === $jobVacansy->company_id;
     }
 
     /**
@@ -29,16 +29,15 @@ class VacancyPolicy
      */
     public function create(User $user): bool
     {
-        return $user->company_id !== null;
+        return $user->company !== null;
     }
-
 
     /**
      * Determine whether the user can update the model.
      */
     public function update(User $user, JobVacansy $jobVacansy): bool
     {
-        return $user->id === $jobVacansy->company_id;
+        return $user->company && $user->company->id === $jobVacansy->company_id;
     }
 
     /**
@@ -46,7 +45,7 @@ class VacancyPolicy
      */
     public function delete(User $user, JobVacansy $jobVacansy): bool
     {
-        return $user->company_id === $jobVacansy->company_id;
+        return $user->company && $user->company->id === $jobVacansy->company_id;
     }
 
     /**
@@ -54,10 +53,14 @@ class VacancyPolicy
      */
     public function restore(User $user, JobVacansy $jobVacansy): bool
     {
-        return $user->company_id === $jobVacansy->company_id;
+        return $user->company && $user->company->id === $jobVacansy->company_id;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
+    public function forceDelete(User $user, JobVacansy $jobVacansy): bool
+    {
+        return $user->company && $user->company->id === $jobVacansy->company_id;
+    }
 }

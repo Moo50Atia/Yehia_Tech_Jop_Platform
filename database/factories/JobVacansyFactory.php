@@ -26,7 +26,9 @@ class JobVacansyFactory extends Factory
             'type' => fake()->randomElement(['full-time', 'remote', 'contract', 'part-time']),
             'salary' => fake()->randomFloat(2, 30000, 150000),
             'company_id' => Company::factory(),
-            'job_category_id' => JopCategory::factory(),
+            'job_category_id' => null,
+            'note' => fake()->sentence(),
+            'status' => fake()->randomElement(['active', 'pending', 'rejected']),
         ];
     }
 }

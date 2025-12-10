@@ -18,8 +18,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('Total Applicants') }}</p>
-                            <p class="text-3xl font-bold text-gray-900 dark:text-white mt-1">89</p>
-                            <p class="text-sm text-green-600 dark:text-green-400 mt-1">+12% from last month</p>
+                            <p class="text-3xl font-bold text-gray-900 dark:text-white mt-1">{{ $totalApplicants }}</p>
                         </div>
                         <div class="p-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
                             <svg class="w-10 h-10 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,8 +32,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('Total Applications') }}</p>
-                            <p class="text-3xl font-bold text-gray-900 dark:text-white mt-1">156</p>
-                            <p class="text-sm text-green-600 dark:text-green-400 mt-1">+23% from last month</p>
+                            <p class="text-3xl font-bold text-gray-900 dark:text-white mt-1">{{ $totalApplications }}</p>
                         </div>
                         <div class="p-4 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
                             <svg class="w-10 h-10 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,17 +77,18 @@
                         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                             {{-- Attention: users relationship - Loop through unique applicants --}}
                             <!-- Row 1 -->
+                            @foreach ($users as $user)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 h-10 w-10">
                                             <div class="h-10 w-10 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center">
-                                                <span class="text-indigo-600 dark:text-indigo-400 font-semibold text-sm">JD</span>
+                                                <span class="text-indigo-600 dark:text-indigo-400 font-semibold text-sm">{{ $user->initials }}</span>
                                             </div>
                                         </div>
                                         <div class="ml-4">
                                             <div class="text-sm font-medium text-gray-900 dark:text-white">
-                                                John Doe
+                                                {{ $user->name }}
                                             </div>
                                             <div class="text-sm text-gray-500 dark:text-gray-400">
                                                 Job Seeker
@@ -98,22 +97,22 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900 dark:text-white">john.doe@example.com</div>
+                                    <div class="text-sm text-gray-900 dark:text-white">{{ $user->email }}</div>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="text-sm text-gray-900 dark:text-white">Senior Full Stack Developer</div>
-                                    <div class="text-sm text-gray-500 dark:text-gray-400">Software Development</div>
+                                    <div class="text-sm text-gray-900 dark:text-white">{{ $user->lastApplicationVacancy?->title ?? 'N/A' }}</div>
+                                    <div class="text-sm text-gray-500 dark:text-gray-400">{{ $user->lastApplicationVacancy?->jobCategory?->name ?? 'N/A' }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
                                         <svg class="w-4 h-4 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                                         </svg>
-                                        <span class="text-sm font-medium text-gray-900 dark:text-white">8.5/10</span>
+                                        <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->averageScore ?? 'N/A' }}/10</span>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                    Nov 22, 2025
+                                    {{ $user->lastApplicationDate ?? 'N/A' }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <a href="#" class="inline-flex items-center px-3 py-1.5 bg-indigo-600 dark:bg-indigo-500 text-white text-xs font-medium rounded-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors">
@@ -124,194 +123,8 @@
                                     </a>
                                 </td>
                             </tr>
+                            @endforeach
 
-                            <!-- Row 2 -->
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-10 w-10">
-                                            <div class="h-10 w-10 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
-                                                <span class="text-purple-600 dark:text-purple-400 font-semibold text-sm">JS</span>
-                                            </div>
-                                        </div>
-                                        <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900 dark:text-white">
-                                                Jane Smith
-                                            </div>
-                                            <div class="text-sm text-gray-500 dark:text-gray-400">
-                                                Job Seeker
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900 dark:text-white">jane.smith@example.com</div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="text-sm text-gray-900 dark:text-white">Marketing Manager</div>
-                                    <div class="text-sm text-gray-500 dark:text-gray-400">Marketing</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <svg class="w-4 h-4 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                        </svg>
-                                        <span class="text-sm font-medium text-gray-900 dark:text-white">9.2/10</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                    Nov 21, 2025
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="#" class="inline-flex items-center px-3 py-1.5 bg-indigo-600 dark:bg-indigo-500 text-white text-xs font-medium rounded-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                        </svg>
-                                        View Profile
-                                    </a>
-                                </td>
-                            </tr>
-
-                            <!-- Row 3 -->
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-10 w-10">
-                                            <div class="h-10 w-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                                                <span class="text-green-600 dark:text-green-400 font-semibold text-sm">MB</span>
-                                            </div>
-                                        </div>
-                                        <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900 dark:text-white">
-                                                Mike Brown
-                                            </div>
-                                            <div class="text-sm text-gray-500 dark:text-gray-400">
-                                                Job Seeker
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900 dark:text-white">mike.brown@example.com</div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="text-sm text-gray-900 dark:text-white">UI/UX Designer</div>
-                                    <div class="text-sm text-gray-500 dark:text-gray-400">Design</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <svg class="w-4 h-4 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                        </svg>
-                                        <span class="text-sm font-medium text-gray-900 dark:text-white">7.8/10</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                    Nov 20, 2025
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="#" class="inline-flex items-center px-3 py-1.5 bg-indigo-600 dark:bg-indigo-500 text-white text-xs font-medium rounded-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                        </svg>
-                                        View Profile
-                                    </a>
-                                </td>
-                            </tr>
-
-                            <!-- Row 4 -->
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-10 w-10">
-                                            <div class="h-10 w-10 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center">
-                                                <span class="text-orange-600 dark:text-orange-400 font-semibold text-sm">SW</span>
-                                            </div>
-                                        </div>
-                                        <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900 dark:text-white">
-                                                Sarah Wilson
-                                            </div>
-                                            <div class="text-sm text-gray-500 dark:text-gray-400">
-                                                Job Seeker
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900 dark:text-white">sarah.wilson@example.com</div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="text-sm text-gray-900 dark:text-white">Sales Representative</div>
-                                    <div class="text-sm text-gray-500 dark:text-gray-400">Sales</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <svg class="w-4 h-4 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                        </svg>
-                                        <span class="text-sm font-medium text-gray-900 dark:text-white">8.1/10</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                    Nov 19, 2025
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="#" class="inline-flex items-center px-3 py-1.5 bg-indigo-600 dark:bg-indigo-500 text-white text-xs font-medium rounded-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                        </svg>
-                                        View Profile
-                                    </a>
-                                </td>
-                            </tr>
-
-                            <!-- Row 5 -->
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-10 w-10">
-                                            <div class="h-10 w-10 rounded-full bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center">
-                                                <span class="text-pink-600 dark:text-pink-400 font-semibold text-sm">AD</span>
-                                            </div>
-                                        </div>
-                                        <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900 dark:text-white">
-                                                Alex Davis
-                                            </div>
-                                            <div class="text-sm text-gray-500 dark:text-gray-400">
-                                                Job Seeker
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900 dark:text-white">alex.davis@example.com</div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="text-sm text-gray-900 dark:text-white">Customer Support Specialist</div>
-                                    <div class="text-sm text-gray-500 dark:text-gray-400">Customer Support</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <svg class="w-4 h-4 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                        </svg>
-                                        <span class="text-sm font-medium text-gray-900 dark:text-white">7.5/10</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                    Nov 18, 2025
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="#" class="inline-flex items-center px-3 py-1.5 bg-indigo-600 dark:bg-indigo-500 text-white text-xs font-medium rounded-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                        </svg>
-                                        View Profile
-                                    </a>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -319,26 +132,27 @@
                 <!-- Mobile Card View -->
                 <div class="md:hidden p-4 space-y-4">
                     <!-- Card 1 -->
+                    @foreach ($users as $user)
                     <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
                         <div class="flex items-start space-x-3 mb-3">
                             <div class="flex-shrink-0 h-12 w-12 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center">
-                                <span class="text-indigo-600 dark:text-indigo-400 font-semibold">JD</span>
+                                <span class="text-indigo-600 dark:text-indigo-400 font-semibold">{{ $user->initials }}</span>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <h4 class="text-sm font-semibold text-gray-900 dark:text-white">John Doe</h4>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">john.doe@example.com</p>
+                                <h4 class="text-sm font-semibold text-gray-900 dark:text-white">{{ $user->name }}</h4>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">{{ $user->email }}</p>
                             </div>
                         </div>
                         <div class="space-y-2 mb-3">
-                            <p class="text-sm text-gray-900 dark:text-white">Senior Full Stack Developer</p>
+                            <p class="text-sm text-gray-900 dark:text-white">{{ $user->lastApplicationVacancy->title }}</p>
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center">
                                     <svg class="w-4 h-4 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                                     </svg>
-                                    <span class="text-sm font-medium text-gray-900 dark:text-white">8.5/10</span>
+                                    <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->averageScore }}/10</span>
                                 </div>
-                                <span class="text-xs text-gray-500 dark:text-gray-400">Nov 22, 2025</span>
+                                <span class="text-xs text-gray-500 dark:text-gray-400">{{ $user->lastApplicationDate }}</span>
                             </div>
                         </div>
                         <a href="#" class="w-full inline-flex items-center justify-center px-4 py-2 bg-indigo-600 dark:bg-indigo-500 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors">
@@ -348,7 +162,7 @@
                             View Profile
                         </a>
                     </div>
-
+                    @endforeach
                     <!-- Card 2 -->
                     <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
                         <div class="flex items-start space-x-3 mb-3">
@@ -383,4 +197,5 @@
             </div>
         </div>
     </div>
+    {{ $users->links() }}
 </x-app-layout>

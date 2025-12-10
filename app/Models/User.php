@@ -8,16 +8,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\JopApplication;
+use App\Models\JobApplication;
 use App\Models\Resume;
 use App\Models\Company;
 use App\Models\JobVacansy;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\DashboardTrait;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasUuids, SoftDeletes;
+    use HasFactory, Notifiable, HasUuids, SoftDeletes, DashboardTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -60,7 +62,7 @@ class User extends Authenticatable
     }
     public function jobApplications()
     {
-        return $this->hasMany(JopApplication::class, 'user_id', 'id');
+        return $this->hasMany(JobApplication::class, 'user_id', 'id');
     }
     public function resumes()
     {
@@ -86,5 +88,38 @@ class User extends Authenticatable
                 });
             }
         );
+    }
+    public function getInitialsAttribute(): string
+    {
+        // استدعاء دالة الـ Helper مباشرةً لأنها معرفة عالمياً
+        return getInitialsLaravel($this->name);
+    }
+    public function getAverageScoreAttribute()
+    {
+        // نفترض ان عندك company_id معروف من الـ context أو علاقة
+        $companyId = Auth::user()->company->id;
+
+        return round($this->jobApplications()
+            ->where('company_id', $companyId)
+            ->avg('aiGeneratedScore'), 1);
+    }
+    public function getLastApplicationVacancyAttribute()
+    {
+        $lastApplication = $this->jobApplications()
+            ->where('company_id', Auth::user()->company->id)
+            ->latest()
+            ->first(); // رجع الـ Application كاملة بدل value('created_at')
+
+        return $lastApplication?->jobVacansy; // ترجع الـ vacancy المرتبط بيها
+    }
+
+    public function getLastApplicationDateAttribute()
+    {
+        $lastApplication = $this->jobApplications()
+            ->where('company_id', Auth::user()->company->id)
+            ->latest()
+            ->first();
+
+        return $lastApplication?->created_at?->format('M d, Y');
     }
 }

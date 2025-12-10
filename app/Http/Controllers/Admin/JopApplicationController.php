@@ -4,46 +4,59 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\JopApplicationRequest;
-use App\Models\JopApplication;
+use App\Models\JobApplication;
+use App\Models\User;
+use App\Models\JobVacansy;
+use App\Models\Resume;
+use App\Models\Company;
 
 class JopApplicationController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\View
     {
-        $jop_applications = JopApplication::latest()->paginate(10);
+        $jop_applications = JobApplication::with(['user', 'jobVacansy', 'resume', 'company'])->latest()->paginate(10);
         return view('jop_applications.index', compact('jop_applications'));
     }
 
     public function create(): \Illuminate\Contracts\View\View
     {
-        return view('jop_applications.create');
+        $users = User::where('role', 'jop_seeker')->get();
+        $vacancies = JobVacansy::with('company')->get();
+        $resumes = Resume::with('user')->get();
+        $companies = Company::all();
+        return view('jop_applications.create', compact('users', 'vacancies', 'resumes', 'companies'));
     }
 
     public function store(JopApplicationRequest $request): \Illuminate\Http\RedirectResponse
     {
-        JopApplication::create($request->validated());
-        return redirect()->route('jop_applications.index')->with('success', 'Created successfully');
+        JobApplication::create($request->validated());
+        return redirect()->route('admin.applications.index')->with('success', 'Application created successfully');
     }
 
-    public function show(JopApplication $jopApplication): \Illuminate\Contracts\View\View
+    public function show(JobApplication $application): \Illuminate\Contracts\View\View
     {
-        return view('jop_applications.show', compact('jopApplication'));
+        $application->load(['user', 'jobVacansy', 'resume', 'company']);
+        return view('jop_applications.show', compact('application'));
     }
 
-    public function edit(JopApplication $jopApplication): \Illuminate\Contracts\View\View
+    public function edit(JobApplication $application): \Illuminate\Contracts\View\View
     {
-        return view('jop_applications.edit', compact('jopApplication'));
+        $users = User::where('role', 'jop_seeker')->get();
+        $vacancies = JobVacansy::with('company')->get();
+        $resumes = Resume::with('user')->get();
+        $companies = Company::all();
+        return view('jop_applications.edit', compact('application', 'users', 'vacancies', 'resumes', 'companies'));
     }
 
-    public function update(JopApplicationRequest $request, JopApplication $jopApplication): \Illuminate\Http\RedirectResponse
+    public function update(JopApplicationRequest $request, JobApplication $application): \Illuminate\Http\RedirectResponse
     {
-        $jopApplication->update($request->validated());
-        return redirect()->route('jop_applications.index')->with('success', 'Updated successfully');
+        $application->update($request->validated());
+        return redirect()->route('admin.applications.index')->with('success', 'Application updated successfully');
     }
 
-    public function destroy(JopApplication $jopApplication): \Illuminate\Http\RedirectResponse
+    public function destroy(JobApplication $application): \Illuminate\Http\RedirectResponse
     {
-        $jopApplication->delete();
-        return redirect()->route('jop_applications.index')->with('success', 'Deleted successfully');
+        $application->delete();
+        return redirect()->route('admin.applications.index')->with('success', 'Application deleted successfully');
     }
 }

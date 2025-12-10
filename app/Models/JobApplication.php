@@ -9,19 +9,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Resume;
 use App\Models\User;
 use App\Models\JobVacansy;
+use App\DashboardTrait;
 
-class JopApplication extends Model
+class JobApplication extends Model
 {
     /** @use HasFactory<\Database\Factories\JopApplicationFactory> */
-    use HasFactory, HasUuids, SoftDeletes;
+    use HasFactory, HasUuids, SoftDeletes, DashboardTrait;
     protected $primaryKey = 'id';
     protected $keyType = 'string';
     public $incrementing = false;
     protected $table = 'jop_applications';
     protected $fillable = [
         'user_id',
-        'job_vacancy_id',
+        'job_vacansy_id',
         'resume_id',
+        'company_id',
         'status',
         'aiGeneratedScore',
         'aiGeneratedFeedback',
@@ -34,9 +36,9 @@ class JopApplication extends Model
         ];
     }
 
-    public function jobVacancy()
+    public function jobVacansy()
     {
-        return $this->belongsTo(JobVacansy::class, 'job_vacancy_id', 'id');
+        return $this->belongsTo(JobVacansy::class, 'job_vacansy_id', 'id');
     }
 
     public function user()
@@ -47,5 +49,9 @@ class JopApplication extends Model
     public function resume()
     {
         return $this->belongsTo(Resume::class, 'resume_id', 'id');
+    }
+    public function getScoreAttribute()
+    {
+        return round($this->aiGeneratedScore / 10, 1);
     }
 }

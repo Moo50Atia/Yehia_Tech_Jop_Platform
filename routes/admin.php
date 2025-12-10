@@ -14,11 +14,15 @@ Route::middleware(['auth', 'admin'])
     ->group(function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('reports', function () {
+            return view('reports');
+        })->name('reports');
+
 
         // Admin CRUD routes
         Route::resource('users', UserController::class);
         Route::resource('companies', CompanyController::class);
-        Route::resource('categories', JopCategoryController::class);
-        Route::resource('vacansies', JobVacansyController::class);
-        Route::resource('applications', JopApplicationController::class);
+        Route::resource('categories', JopCategoryController::class)->parameters(['categories' => 'category']);
+        Route::resource('vacansies', JobVacansyController::class)->parameters(['vacansies' => 'vacansy']);
+        Route::resource('applications', JopApplicationController::class)->parameters(['applications' => 'application']);
     });

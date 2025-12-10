@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('job_vacansies', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreignUuid('job_category_id')->nullable()->references('id')->on('jop_categories')->onDelete('cascade');
             $table->string('title');
             $table->text('description');
             $table->string('note')->nullable();
             $table->string('location')->nullable();
             $table->enum('type', ['full-time', 'remote', 'contract', 'part-time'])->default('full-time'); // full-time, part-time, contract, etc.
             $table->decimal('salary', 10, 2)->nullable();
-            $table->foreignUuid('company_id')->references('id')->on('companies')->onDelete('cascade');
-            $table->foreignUuid('job_category_id')->references('id')->on('jop_categories')->onDelete('cascade');
+            $table->enum('status', ['active', 'pending', 'rejected'])->default('active');
             $table->timestamps();
             $table->softDeletes();
         });

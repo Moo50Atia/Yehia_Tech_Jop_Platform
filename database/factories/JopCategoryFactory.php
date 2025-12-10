@@ -19,10 +19,22 @@ class JopCategoryFactory extends Factory
     {
         return [
             'name' => fake()->unique()->randomElement([
-                'Software Development', 'Data Science', 'Design', 'Marketing',
-                'Sales', 'Customer Service', 'Human Resources', 'Finance',
-                'Engineering', 'Healthcare', 'Education', 'Legal',
-                'Operations', 'Product Management', 'Quality Assurance', 'DevOps'
+                'Software Development',
+                'Data Science',
+                'Design',
+                'Marketing',
+                'Sales',
+                'Customer Service',
+                'Human Resources',
+                'Finance',
+                'Engineering',
+                'Healthcare',
+                'Education',
+                'Legal',
+                'Operations',
+                'Product Management',
+                'Quality Assurance',
+                'DevOps',
             ]),
         ];
     }

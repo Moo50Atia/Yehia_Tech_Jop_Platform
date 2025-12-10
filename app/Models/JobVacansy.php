@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\JopCategory;
 use App\Models\Company;
-use App\Models\JopApplication;
+use App\Models\JobApplication;
+use App\DashboardTrait;
 
 class JobVacansy extends Model
 {
     /** @use HasFactory<\Database\Factories\JobVacansyFactory> */
-    use HasFactory, HasUuids, SoftDeletes;
+    use HasFactory, HasUuids, SoftDeletes, DashboardTrait;
     protected $primaryKey = 'id';
     protected $keyType = 'string';
     public $incrementing = false;
@@ -28,6 +29,7 @@ class JobVacansy extends Model
         'location',
         'type',
         'salary',
+        'status',
 
     ];
     protected $dates = [
@@ -47,8 +49,12 @@ class JobVacansy extends Model
     {
         return $this->belongsTo(JopCategory::class, 'job_category_id', 'id');
     }
-    public function JopApplications()
+    public function JobApplications()
     {
-        return $this->hasMany(JopApplication::class, 'job_vacansy_id', 'id');
+        return $this->hasMany(JobApplication::class, 'job_vacansy_id', 'id');
+    }
+    public function getVacanciesCountAttribute()
+    {
+        return $this->JobApplications()->count();
     }
 }

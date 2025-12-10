@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -23,12 +24,15 @@ class UserController extends Controller
 
     public function store(UserRequest $request): \Illuminate\Http\RedirectResponse
     {
-        User::create($request->validated());
-        return redirect()->route('users.index')->with('success', 'Created successfully');
+        $data = $request->validated();
+        $data['password'] = Hash::make($data['password']);
+        User::create($data);
+        return redirect()->route('admin.users.index')->with('success', 'User created successfully');
     }
 
     public function show(User $user): \Illuminate\Contracts\View\View
     {
+        $user->load(['resumes', 'jobApplications.jobVacansy', 'jobApplications.company', 'company']);
         return view('users.show', compact('user'));
     }
 
@@ -39,13 +43,19 @@ class UserController extends Controller
 
     public function update(UserRequest $request, User $user): \Illuminate\Http\RedirectResponse
     {
-        $user->update($request->validated());
-        return redirect()->route('users.index')->with('success', 'Updated successfully');
+        $data = $request->validated();
+        if (!empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
+        }
+        $user->update($data);
+        return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
     }
 
     public function destroy(User $user): \Illuminate\Http\RedirectResponse
     {
         $user->delete();
-        return redirect()->route('users.index')->with('success', 'Deleted successfully');
+        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully');
     }
 }

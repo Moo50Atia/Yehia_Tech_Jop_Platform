@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->string('industry')->nullable();
             $table->string('website')->nullable();
+            $table->string('about')->nullable();
             $table->foreignUuid('owner_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

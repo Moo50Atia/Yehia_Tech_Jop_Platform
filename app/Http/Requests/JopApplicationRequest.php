@@ -14,14 +14,28 @@ class JopApplicationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'string|max:36',
-            'job_vacansy_id' => 'string|max:36',
-            'resume_id' => 'string|max:36',
-            'company_id' => 'string|max:36',
-            'status' => 'in:pending,accepted,rejected',
-            'aiGeneratedScore' => 'numeric',
-            'aiGeneratedFeedback' => 'string',
-            'deleted_at' => 'date',
+            'user_id' => 'required|exists:users,id',
+            'job_vacansy_id' => 'required|exists:job_vacansies,id',
+            'resume_id' => 'required|exists:resumes,id',
+            'company_id' => 'required|exists:companies,id',
+            'status' => 'nullable|in:pending,accepted,rejected',
+            'aiGeneratedScore' => 'nullable|numeric|min:0|max:100',
+            'aiGeneratedFeedback' => 'nullable|string',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'user_id.required' => 'Please select an applicant.',
+            'user_id.exists' => 'The selected applicant does not exist.',
+            'job_vacansy_id.required' => 'Please select a job vacancy.',
+            'job_vacansy_id.exists' => 'The selected job vacancy does not exist.',
+            'resume_id.required' => 'Please select a resume.',
+            'resume_id.exists' => 'The selected resume does not exist.',
+            'company_id.required' => 'Please select a company.',
+            'company_id.exists' => 'The selected company does not exist.',
+            'status.in' => 'Invalid status selected.',
         ];
     }
 }

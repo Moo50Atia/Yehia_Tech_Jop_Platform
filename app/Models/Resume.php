@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\JopApplication;
+use App\Models\JobApplication;
 use App\Models\User;
 
 class Resume extends Model
 {
     /** @use HasFactory<\Database\Factories\ResumeFactory> */
-    use HasFactory , HasUuids , SoftDeletes;
+    use HasFactory, HasUuids, SoftDeletes;
     protected $primaryKey = 'id';
     protected $keyType = 'string';
     public $incrementing = false;
@@ -36,10 +36,12 @@ class Resume extends Model
             'deleted_at' => 'datetime',
         ];
     }
-    public function user(){
-        return $this->belongsTo(User::class ,'user_id','id');
-    }    
-    public function jobApplications(){
-        return $this->hasMany(JopApplication::class ,'resume_id','id');
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+    public function jobApplications()
+    {
+        return $this->hasMany(JobApplication::class, 'resume_id', 'id');
     }
 }

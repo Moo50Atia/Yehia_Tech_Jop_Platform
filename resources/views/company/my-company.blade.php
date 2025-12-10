@@ -32,13 +32,14 @@
                 <div class="pt-16 px-8 pb-8">
                     <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
                         <div>
-                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Tech Solutions Inc.</h1>
+                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">{{$company->name}}</h1>
                             <p class="text-gray-600 dark:text-gray-400 flex items-center">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
-                                San Francisco, CA
+                                {{$company->address}}
+                                <!-- , {{$company->FristAlphapetInCompanyCountry}} -->
                             </p>
                         </div>
                         <div class="mt-4 md:mt-0">
@@ -55,7 +56,7 @@
                         <div>
                             <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">{{ __('About') }}</h3>
                             <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                                We are a leading technology company specializing in innovative software solutions. Our mission is to empower businesses through cutting-edge technology and exceptional talent.
+                                {{$company->about}}
                             </p>
                         </div>
                         <div class="space-y-3">
@@ -63,19 +64,19 @@
                                 <svg class="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
                                 </svg>
-                                <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline">www.techsolutions.com</a>
+                                <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline">{{$company->website}}</a>
                             </div>
                             <div class="flex items-center">
                                 <svg class="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                 </svg>
-                                <span class="text-gray-700 dark:text-gray-300">Technology</span>
+                                <span class="text-gray-700 dark:text-gray-300">{{$company->industry}}</span>
                             </div>
                             <div class="flex items-center">
                                 <svg class="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                 </svg>
-                                <span class="text-gray-700 dark:text-gray-300">Established: 2015</span>
+                                <span class="text-gray-700 dark:text-gray-300">Established: {{$YearTheCompanyEstablished}}</span>
                             </div>
                         </div>
                     </div>
@@ -95,8 +96,8 @@
                                 </svg>
                             </div>
                         </div>
-                        <h3 class="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">{{ __('Total Employees') }}</h3>
-                        <p class="text-3xl font-bold text-gray-900 dark:text-white">250</p>
+                        <h3 class="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">{{ __('Total Applications') }}</h3>
+                        <p class="text-3xl font-bold text-gray-900 dark:text-white"> {{$totalJobApplication}}</p>
                     </div>
                 </div>
 
@@ -112,7 +113,7 @@
                             </div>
                         </div>
                         <h3 class="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">{{ __('Total Vacancies') }}</h3>
-                        <p class="text-3xl font-bold text-gray-900 dark:text-white">24</p>
+                        <p class="text-3xl font-bold text-gray-900 dark:text-white">{{$totalJobVacancy}}</p>
                     </div>
                 </div>
 
@@ -128,7 +129,7 @@
                             </div>
                         </div>
                         <h3 class="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">{{ __('Total Applicants') }}</h3>
-                        <p class="text-3xl font-bold text-gray-900 dark:text-white">156</p>
+                        <p class="text-3xl font-bold text-gray-900 dark:text-white">{{$totalApplicants}}</p>
                     </div>
                 </div>
 
@@ -144,7 +145,7 @@
                             </div>
                         </div>
                         <h3 class="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">{{ __('Avg Applicant Score') }}</h3>
-                        <p class="text-3xl font-bold text-gray-900 dark:text-white">7.8<span class="text-lg text-gray-500 dark:text-gray-400">/10</span></p>
+                        <p class="text-3xl font-bold text-gray-900 dark:text-white">{{$AVGapllicantScore}}<span class="text-lg text-gray-500 dark:text-gray-400">/10</span></p>
                     </div>
                 </div>
             </div>
@@ -158,23 +159,24 @@
                 <div class="p-6">
                     {{-- Attention: vacancies relationship - Need to get vacancies with applications count --}}
                     <div class="space-y-6">
+                        @foreach ($applications_received_per_vacancy as $application)
                         <!-- Vacancy 1 -->
                         <div>
                             <div class="flex items-center justify-between mb-2">
                                 <div class="flex-1">
-                                    <h4 class="text-sm font-medium text-gray-900 dark:text-white">Senior Full Stack Developer</h4>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">Software Development</p>
+                                    <h4 class="text-sm font-medium text-gray-900 dark:text-white">{{$application['title']}}</h4>
+
                                 </div>
-                                <span class="text-sm font-semibold text-gray-900 dark:text-white ml-4">45 applications</span>
+                                <span class="text-sm font-semibold text-gray-900 dark:text-white ml-4">{{$application['applications']}} applications</span>
                             </div>
                             <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                                 <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-3 rounded-full flex items-center justify-end pr-2" style="width: 90%">
-                                    <span class="text-xs font-medium text-white">90%</span>
+                                    <span class="text-xs font-medium text-white">{{$application['percentage']}}%</span>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Vacancy 2 -->
+                        @endforeach
+                        <!-- Vacancy 2
                         <div>
                             <div class="flex items-center justify-between mb-2">
                                 <div class="flex-1">
@@ -190,7 +192,7 @@
                             </div>
                         </div>
 
-                        <!-- Vacancy 3 -->
+                         Vacancy 3 
                         <div>
                             <div class="flex items-center justify-between mb-2">
                                 <div class="flex-1">
@@ -206,7 +208,7 @@
                             </div>
                         </div>
 
-                        <!-- Vacancy 4 -->
+                        Vacancy 4 
                         <div>
                             <div class="flex items-center justify-between mb-2">
                                 <div class="flex-1">
@@ -222,7 +224,7 @@
                             </div>
                         </div>
 
-                        <!-- Vacancy 5 -->
+                        Vacancy 5 
                         <div>
                             <div class="flex items-center justify-between mb-2">
                                 <div class="flex-1">
@@ -236,7 +238,7 @@
                                     <span class="text-xs font-medium text-white">52%</span>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignUuid('user_id')->references('id')->on('users')->onDelete('restrict');
             $table->foreignUuid('job_vacansy_id')->references('id')->on('job_vacansies')->onDelete('restrict');
             $table->foreignUuid('resume_id')->references('id')->on('resumes')->onDelete('restrict');
+            $table->foreignUuid('company_id')->references('id')->on('companies')->onDelete('restrict');
             $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending'); // pending, accepted, rejected
             $table->decimal('aiGeneratedScore', 10, 2)->default(0);
             $table->longText('aiGeneratedFeedback')->nullable();

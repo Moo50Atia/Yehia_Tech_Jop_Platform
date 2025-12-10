@@ -34,8 +34,26 @@ class DashboardController extends Controller
             'pending' => JobApplication::where('status', 'pending')->count(),
             'accepted' => JobApplication::where('status', 'accepted')->count(),
             'rejected' => JobApplication::where('status', 'rejected')->count(),
-            'under_review' => JobApplication::where('status', 'under_review')->count(),
+
         ];
+        $vacancyGrowthLabels = [];
+        $vacancyGrowthData = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $month = now()->subMonths($i);
+            $vacancyGrowthLabels[] = $month->format('M');
+            $vacancyGrowthData[] = JobVacansy::whereYear('created_at', $month->year)
+                ->whereMonth('created_at', $month->month)
+                ->count();
+        }
+        $applicationGrowthLabels = [];
+        $applicationGrowthData = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $month = now()->subMonths($i);
+            $applicationGrowthLabels[] = $month->format('M');
+            $applicationGrowthData[] = JobApplication::whereYear('created_at', $month->year)
+                ->whereMonth('created_at', $month->month)
+                ->count();
+        }
 
         return view('dashboard', [
             'companies' => $companies,
@@ -45,6 +63,10 @@ class DashboardController extends Controller
             'userGrowthLabels' => $userGrowthLabels,
             'userGrowthData' => $userGrowthData,
             'applicationsByStatus' => $applicationsByStatus,
+            'vacancyGrowthLabels' => $vacancyGrowthLabels,
+            'vacancyGrowthData' => $vacancyGrowthData,
+            'applicationGrowthLabels' => $applicationGrowthLabels,
+            'applicationGrowthData' => $applicationGrowthData,
         ]);
     }
 }

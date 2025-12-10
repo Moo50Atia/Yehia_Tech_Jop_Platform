@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\JobVacansy;
+use App\DashboardTrait;
 
 class Company extends Model
 {
     /** @use HasFactory<\Database\Factories\CompanyFactory> */
-    use HasFactory, HasUuids, SoftDeletes;
+    use HasFactory, HasUuids, SoftDeletes, DashboardTrait;
     protected $table = 'companies';
     protected $primaryKey = 'id';
     protected $keyType = 'string';
@@ -21,6 +22,7 @@ class Company extends Model
         'address',
         'industry',
         'website',
+        'about',
         'owner_id',
 
     ];

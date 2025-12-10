@@ -12,10 +12,29 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Auth routes (Breeze / Jetstream)
-require __DIR__ . '/auth.php';
+// Route::get('vacansies/{id?}', function () {
+//     return view('job_vacansies.show');
+// })->name('vacansies.show.virtual');
 
-require __DIR__ . '/admin.php';
+// Virtual routes for frontend-only show pages (override resource routes)
+// These routes are defined BEFORE resource routes to take precedence
+// Route::get('users/{id?}', function () {
+//     return view('users.show');
+// })->name('users.show.virtual');
+
+Route::get('companies/{id?}', function () {
+    return view('companies.show');
+})->name('companies.show.virtual');
+
+// Route::get('categories/{id?}', function () {
+//     return view('jop_categories.show');
+// })->name('categories.show.virtual');
+
+
+// Route::get('applications/{id?}', function () {
+//     return view('jop_applications.show');
+// })->name('applications.show.virtual');
+// Auth routes (Breeze / Jetstream)
 // Company Owner routes
 Route::middleware(['auth'])->group(function () {
 
@@ -35,4 +54,20 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('users', [CompanyOwnerUserController::class, 'index'])
         ->name('company.users');
+
+    // Virtual routes for frontend-only show pages (no backend required)
+    Route::get('resume/show/{id?}', function () {
+        return view('resumes.show');
+    })->name('resume.show');
+
+    Route::get('resume/create', function () {
+        return view('resumes.create');
+    })->name('resume.create');
+
+    Route::get('resume/edit/{id?}', function () {
+        return view('resumes.edit');
+    })->name('resume.edit');
 });
+require __DIR__ . '/auth.php';
+
+require __DIR__ . '/admin.php';

@@ -18,7 +18,7 @@ class AdminRoleMiddleware
     {
         $user = Auth::user();
         if (!$user || $user->role !== 'admin') {
-            return redirect()->route('user.index')
+            return redirect()->route('company.my-company')
                 ->with('error', 'You are not authorized to access this page.');
         } else {
             return $next($request);

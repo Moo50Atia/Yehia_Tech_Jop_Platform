@@ -22,11 +22,21 @@ class CompanyFactory extends Factory
             'name' => fake()->company(),
             'address' => fake()->address(),
             'industry' => fake()->randomElement([
-                'Technology', 'Healthcare', 'Finance', 'Education', 
-                'Manufacturing', 'Retail', 'Construction', 'Marketing',
-                'Real Estate', 'Hospitality', 'Transportation', 'Agriculture'
+                'Technology',
+                'Healthcare',
+                'Finance',
+                'Education',
+                'Manufacturing',
+                'Retail',
+                'Construction',
+                'Marketing',
+                'Real Estate',
+                'Hospitality',
+                'Transportation',
+                'Agriculture'
             ]),
             'website' => fake()->url(),
+            'about' => fake()->sentence(10),
             'owner_id' => User::factory(),
         ];
     }
